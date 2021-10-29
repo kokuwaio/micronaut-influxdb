@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>io.kokuwa</groupId>
+		<artifactId>maven-parent</artifactId>
+		<version>0.5.2</version>
+		<relativePath />
+	</parent>
+
+	<groupId>io.kokuwa.micronaut</groupId>
+	<artifactId>micronaut-influxdb</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<name>InfluxDB support for Micronaut</name>
+	<description>Adds features like factory for client, health endpoint, e.g.</description>
+	<url>https://github.com/kokuwaio/micronaut-influxdb</url>
+	<inceptionYear>2021</inceptionYear>
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Stephan Schnabel</name>
+			<url>https://github.com/stephanschnabel</url>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/kokuwaio/micronaut-influxdb</url>
+		<connection>scm:git:https://github.com/kokuwaio/micronaut-influxdb.git</connection>
+		<developerConnection>scm:git:https://github.com/kokuwaio/micronaut-influxdb.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/kokuwaio/micronaut-influxdb/issues</url>
+	</issueManagement>
+
+	<properties>
+
+		<!-- ===================================================================== -->
+		<!-- ============================= Libaries ============================== -->
+		<!-- ===================================================================== -->
+
+		<version.com.influxdb.client>3.4.0</version.com.influxdb.client>
+		<version.io.micronaut>2.5.13</version.io.micronaut>
+
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- micronaut -->
+			<dependency>
+				<groupId>io.micronaut</groupId>
+				<artifactId>micronaut-bom</artifactId>
+				<version>${version.io.micronaut}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- libraries -->
+			<dependency>
+				<groupId>com.influxdb</groupId>
+				<artifactId>influxdb-client-java</artifactId>
+				<version>${version.com.influxdb.client}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+
+		<!-- micronaut -->
+		<dependency>
+			<groupId>io.micronaut</groupId>
+			<artifactId>micronaut-runtime</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- libraries -->
+		<dependency>
+			<groupId>com.influxdb</groupId>
+			<artifactId>influxdb-client-java</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<!-- add compiler processors -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${version.org.projectlombok}</version>
+						</path>
+						<path>
+							<groupId>io.micronaut</groupId>
+							<artifactId>micronaut-inject-java</artifactId>
+							<version>${version.io.micronaut}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
