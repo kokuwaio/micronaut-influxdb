@@ -4,19 +4,21 @@ Supports only InfluxDB 2.x.
 
 ## Features
 
-### Factory for client
+* factory for blocking/rx client
+* health indicator for micronaut health endpoint
 
-Create InfluxDB client based on properties:
+## Properties
 
 | Parameter | Description | Default |
 |---|---|---|
-| `influxdb.url` | **mandataory** connection url of InfluxDB | |
+| `influxdb.health.enabled` | **mandataory** connection url of InfluxDB | |
 | `influxdb.org` | **mandataory** organisation in InfluxDB | |
 | `influxdb.bucket` | bucket within organisation | `default` |
 | `influxdb.log-level` | InfluxDB log level ([values](https://github.com/influxdata/influxdb-client-java/blob/master/client-core/src/main/java/com/influxdb/LogLevel.java#L27)) | `NONE` |
 | `influxdb.token` | token for auth| |
 | `influxdb.username` | username for basic auth| |
 | `influxdb.password` | password for basic auth | |
+| `influxdb.health.enabled` | enable health indicator | `true` |
 
 It is mandatory to provide `influxdb.token` or  `influxdb.username`/`influxdb.password` for authentication. For production use `influxdb.token` because otherwise a sessions is created that will not survive InfluxDB restarts!
 

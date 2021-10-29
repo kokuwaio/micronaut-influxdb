@@ -5,6 +5,8 @@ import java.util.Optional;
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.InfluxDBClientFactory;
 import com.influxdb.client.InfluxDBClientOptions;
+import com.influxdb.client.reactive.InfluxDBClientReactive;
+import com.influxdb.client.reactive.InfluxDBClientReactiveFactory;
 
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Context;
@@ -47,7 +49,12 @@ public class InfluxDBFactory {
 	@Context
 	@Bean(preDestroy = "close")
 	InfluxDBClient influxDBClient(InfluxDBClientOptions options) {
-		log.info("Connecting to influx using url {}.", options.getUrl());
 		return InfluxDBClientFactory.create(options);
+	}
+
+	@Context
+	@Bean(preDestroy = "close")
+	InfluxDBClientReactive influxDBReactiveClient(InfluxDBClientOptions options) {
+		return InfluxDBClientReactiveFactory.create(options);
 	}
 }
