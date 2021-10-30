@@ -11,7 +11,7 @@
 
 	<groupId>io.kokuwa.micronaut</groupId>
 	<artifactId>micronaut-influxdb</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<name>InfluxDB support for Micronaut</name>
 	<description>Adds features like factory for client, health endpoint, e.g.</description>
@@ -35,7 +35,7 @@
 		<url>https://github.com/kokuwaio/micronaut-influxdb</url>
 		<connection>scm:git:https://github.com/kokuwaio/micronaut-influxdb.git</connection>
 		<developerConnection>scm:git:https://github.com/kokuwaio/micronaut-influxdb.git</developerConnection>
-		<tag>0.0.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<issueManagement>
 		<system>github</system>
