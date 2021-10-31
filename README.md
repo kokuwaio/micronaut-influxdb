@@ -2,6 +2,8 @@
 
 Supports only InfluxDB 2.x.
 
+This branch is for Micronaut 2.x, for 3.x see wip branch [3.x](../../tree/3.x).
+
 ## Features
 
 * factory for blocking/rx client
