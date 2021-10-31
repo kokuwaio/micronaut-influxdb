@@ -12,7 +12,7 @@ import com.influxdb.client.domain.HealthCheck;
 
 import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.health.HealthStatus;
-import io.reactivex.Single;
+import reactor.core.publisher.Mono;
 
 /**
  * Test for {@link InfluxDBHealthIndicator}.
@@ -26,7 +26,7 @@ public class InfluxDBHealthIndicatorTest extends AbstractTest {
 	void up() {
 		run(Map.of(), context -> {
 			var endpoint = context.getBean(InfluxDBHealthIndicator.class);
-			var result = Single.fromPublisher(endpoint.getResult()).blockingGet();
+			var result = Mono.from(endpoint.getResult()).block();
 			assertEquals("influxdb", result.getName(), "name");
 			assertEquals(HealthStatus.UP, result.getStatus(), "status");
 			assertTrue(result.getDetails() instanceof HealthCheck, "details");
@@ -39,7 +39,7 @@ public class InfluxDBHealthIndicatorTest extends AbstractTest {
 	void downConnection() {
 		run(Map.of("influxdb.url", "http://localhost:" + SocketUtils.findAvailableTcpPort()), context -> {
 			var endpoint = context.getBean(InfluxDBHealthIndicator.class);
-			var result = Single.fromPublisher(endpoint.getResult()).blockingGet();
+			var result = Mono.from(endpoint.getResult()).block();
 			assertEquals("influxdb", result.getName(), "name");
 			assertEquals(HealthStatus.DOWN, result.getStatus(), "status");
 			assertTrue(result.getDetails() instanceof HealthCheck, "details");

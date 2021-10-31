@@ -1,7 +1,5 @@
 package io.kokuwa.micronaut.influxdb;
 
-import javax.inject.Singleton;
-
 import org.reactivestreams.Publisher;
 
 import com.influxdb.client.InfluxDBClient;
@@ -11,9 +9,10 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.health.HealthStatus;
 import io.micronaut.management.health.indicator.HealthIndicator;
 import io.micronaut.management.health.indicator.HealthResult;
-import io.reactivex.Single;
+import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 /**
  * A {@link HealthIndicator} for InfluxDB.
@@ -31,7 +30,7 @@ public class InfluxDBHealthIndicator implements HealthIndicator {
 
 	@Override
 	public Publisher<HealthResult> getResult() {
-		return Single.fromCallable(() -> getHealthResult()).toFlowable();
+		return Mono.fromCallable(() -> getHealthResult());
 	}
 
 	private HealthResult getHealthResult() {
