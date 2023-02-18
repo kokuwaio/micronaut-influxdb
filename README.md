@@ -4,6 +4,17 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.kokuwa.micronaut/micronaut-influxdb.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.kokuwa.micronaut%22%20AND%20a:%22micronaut-influxdb%22)
 [![CI](https://img.shields.io/github/actions/workflow/status/kokuwaio/micronaut-influxdb/ci.yaml?branch=main&label=CI)](https://github.com/kokuwaio/micronaut-influxdb/actions/workflows/ci.yaml?query=branch%3Amain)
 
+Include in your `pom.xml`:
+
+```xml
+<dependency>
+  <groupId>io.kokuwa.micronaut</groupId>
+  <artifactId>micronaut-influxdb</artifactId>
+  <version>${version.io.kokuwa.micronaut.influxdb}</version>
+  <scope>runtime</scope>
+</dependency>
+```
+
 ## Features
 
 * factory for blocking/rx client
