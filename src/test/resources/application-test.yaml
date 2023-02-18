@@ -1,0 +1,18 @@
+micronaut:
+
+  ## test client
+  http:
+    client:
+      logger-name: io.kokuwa.micronaut.influxdb.TestClient
+
+## see https://docs.micronaut.io/latest/guide/index.html#providedEndpoints
+endpoints:
+  health:
+    enabled: true
+    sensitive: false
+    details-visible: ANONYMOUS
+
+## custom log configuration
+logger:
+  levels:
+    io.kokuwa.micronaut.influxdb: TRACE

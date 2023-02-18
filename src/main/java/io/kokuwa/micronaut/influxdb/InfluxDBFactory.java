@@ -2,17 +2,27 @@ package io.kokuwa.micronaut.influxdb;
 
 import java.util.Optional;
 
+import com.influxdb.LogLevel;
+import com.influxdb.client.BucketsApi;
+import com.influxdb.client.DeleteApi;
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.InfluxDBClientFactory;
 import com.influxdb.client.InfluxDBClientOptions;
-import com.influxdb.client.reactive.InfluxDBClientReactive;
-import com.influxdb.client.reactive.InfluxDBClientReactiveFactory;
+import com.influxdb.client.InfluxQLQueryApi;
+import com.influxdb.client.LabelsApi;
+import com.influxdb.client.OrganizationsApi;
+import com.influxdb.client.QueryApi;
+import com.influxdb.client.WriteApi;
+import com.influxdb.client.WriteApiBlocking;
+import com.influxdb.client.WriteOptions;
 
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Requires;
-import lombok.extern.slf4j.Slf4j;
+import io.micronaut.context.annotation.Secondary;
+import io.micronaut.context.annotation.Value;
+import jakarta.inject.Singleton;
 import okhttp3.OkHttpClient;
 
 /**
@@ -21,40 +31,78 @@ import okhttp3.OkHttpClient;
  * @author Stephan Schnabel
  */
 @Requires(property = "influxdb.enabled", notEquals = "false")
-@Requires(property = "influxdb.url")
 @Factory
-@Slf4j
 public class InfluxDBFactory {
 
-	@Bean
-	InfluxDBClientOptions influxDBClientOptions(InfluxDBProperties properties, Optional<OkHttpClient.Builder> okHttp) {
+	@Singleton
+	@Secondary
+	InfluxDBClientOptions options(
+			@Value("${influxdb.url:`http://influxdb:8086`}") String url,
+			@Value("${influxdb.token:changeMe}") char[] token,
+			@Value("${influxdb.organisaton:default}") String organisaton,
+			@Value("${influxdb.bucket:default}") String bucket,
+			@Value("${influxdb.log-level:NONE}") LogLevel logLevel,
+			Optional<OkHttpClient.Builder> okHttp) {
 		var builder = InfluxDBClientOptions.builder();
-		if (properties.getToken() != null) {
-			builder.authenticateToken(properties.getToken());
-		} else {
-			log.warn("Do not use username/password in production, use token!");
-			builder.authenticate(properties.getUsername(), properties.getPassword());
-		}
-		if (okHttp.isPresent()) {
-			builder.okHttpClient(okHttp.get());
-		}
+		okHttp.ifPresent(builder::okHttpClient);
 		return builder
-				.url(properties.getUrl())
-				.org(properties.getOrg())
-				.bucket(properties.getBucket())
-				.logLevel(properties.getLogLevel())
+				.url(url)
+				.authenticateToken(token)
+				.org(organisaton)
+				.bucket(bucket)
+				.logLevel(logLevel)
 				.build();
 	}
 
 	@Context
 	@Bean(preDestroy = "close")
-	InfluxDBClient influxDBClient(InfluxDBClientOptions options) {
+	InfluxDBClient client(InfluxDBClientOptions options) {
 		return InfluxDBClientFactory.create(options);
 	}
 
-	@Context
-	@Bean(preDestroy = "close")
-	InfluxDBClientReactive influxDBReactiveClient(InfluxDBClientOptions options) {
-		return InfluxDBClientReactiveFactory.create(options);
+	@Singleton
+	BucketsApi buckets(InfluxDBClient client) {
+		return client.getBucketsApi();
+	}
+
+	@Singleton
+	DeleteApi delete(InfluxDBClient client) {
+		return client.getDeleteApi();
+	}
+
+	@Singleton
+	QueryApi query(InfluxDBClient client) {
+		return client.getQueryApi();
+	}
+
+	@Singleton
+	InfluxQLQueryApi influxQuery(InfluxDBClient client) {
+		return client.getInfluxQLQueryApi();
+	}
+
+	@Singleton
+	OrganizationsApi organizations(InfluxDBClient client) {
+		return client.getOrganizationsApi();
+	}
+
+	@Singleton
+	LabelsApi labels(InfluxDBClient client) {
+		return client.getLabelsApi();
+	}
+
+	@Singleton
+	@Secondary
+	WriteOptions writeOptions() {
+		return WriteOptions.DEFAULTS;
+	}
+
+	@Singleton
+	WriteApi write(InfluxDBClient client, WriteOptions options) {
+		return client.makeWriteApi(options);
+	}
+
+	@Singleton
+	WriteApiBlocking writeBlocking(InfluxDBClient client) {
+		return client.getWriteApiBlocking();
 	}
 }

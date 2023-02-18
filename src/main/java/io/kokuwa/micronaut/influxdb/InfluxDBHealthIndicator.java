@@ -1,17 +1,16 @@
 package io.kokuwa.micronaut.influxdb;
 
 import org.reactivestreams.Publisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.influxdb.client.InfluxDBClient;
-import com.influxdb.client.domain.HealthCheck.StatusEnum;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.health.HealthStatus;
 import io.micronaut.management.health.indicator.HealthIndicator;
 import io.micronaut.management.health.indicator.HealthResult;
 import jakarta.inject.Singleton;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 /**
@@ -19,14 +18,17 @@ import reactor.core.publisher.Mono;
  *
  * @author Stephan Schnabel
  */
-@Singleton
+@Requires(property = "influxdb.health.enabled", notEquals = "false")
 @Requires(beans = InfluxDBClient.class)
-@Requires(property = "influxdb.health.enabled", value = "true", defaultValue = "true")
-@Slf4j
-@RequiredArgsConstructor
+@Singleton
 public class InfluxDBHealthIndicator implements HealthIndicator {
 
+	private final Logger log = LoggerFactory.getLogger(InfluxDBHealthIndicator.class);
 	private final InfluxDBClient influxdb;
+
+	public InfluxDBHealthIndicator(InfluxDBClient influxdb) {
+		this.influxdb = influxdb;
+	}
 
 	@Override
 	public Publisher<HealthResult> getResult() {
@@ -35,17 +37,17 @@ public class InfluxDBHealthIndicator implements HealthIndicator {
 
 	private HealthResult getHealthResult() {
 
-		var health = influxdb.health();
-		if (health.getStatus() == StatusEnum.FAIL) {
-			log.warn("Failed to connect to InfluxDB: {}", health.getMessage());
+		var ready = influxdb.ready();
+		if (ready == null) {
+			log.warn("Failed to ping to InfluxDB");
 		} else {
-			log.trace("InfluxDB health: {}", health);
+			log.trace("InfluxDB ready {}", ready);
 		}
 
 		return HealthResult
 				.builder("influxdb")
-				.status(health.getStatus() == StatusEnum.PASS ? HealthStatus.UP : HealthStatus.DOWN)
-				.details(health)
+				.status(ready == null ? HealthStatus.DOWN : HealthStatus.UP)
+				.details(ready)
 				.build();
 	}
 }

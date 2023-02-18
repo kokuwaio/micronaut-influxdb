@@ -1,8 +1,8 @@
 # Micronaut InfluxDB support
 
-Supports only InfluxDB 2.x.
-
-This branch is for Micronaut 2.x, for 3.x see wip branch [3.x](../../tree/3.x).
+[![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/kokuwaio/micronaut-influxdb.svg?label=License)](http://www.apache.org/licenses/)
+[![Maven Central](https://img.shields.io/maven-central/v/io.kokuwa.micronaut/micronaut-influxdb.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.kokuwa.micronaut%22%20AND%20a:%22micronaut-influxdb%22)
+[![CI](https://img.shields.io/github/actions/workflow/status/kokuwaio/micronaut-influxdb/ci.yaml?branch=main&label=CI)](https://github.com/kokuwaio/micronaut-influxdb/actions/workflows/ci.yaml?query=branch%3Amain)
 
 ## Features
 
@@ -13,37 +13,10 @@ This branch is for Micronaut 2.x, for 3.x see wip branch [3.x](../../tree/3.x).
 
 | Parameter | Description | Default |
 |---|---|---|
-| `influxdb.health.enabled` | **mandataory** connection url of InfluxDB | |
-| `influxdb.org` | **mandataory** organisation in InfluxDB | |
+| `influxdb.enabled` | create InfluxDB clients | `true` |
+| `influxdb.url` | connection url of InfluxDB | `http://influxdb:8086` |
+| `influxdb.token` | token for auth | `changeMe` |
+| `influxdb.organisation` | organisation in InfluxDB | `default` |
 | `influxdb.bucket` | bucket within organisation | `default` |
 | `influxdb.log-level` | InfluxDB log level ([values](https://github.com/influxdata/influxdb-client-java/blob/master/client-core/src/main/java/com/influxdb/LogLevel.java#L27)) | `NONE` |
-| `influxdb.token` | token for auth| |
-| `influxdb.username` | username for basic auth| |
-| `influxdb.password` | password for basic auth | |
 | `influxdb.health.enabled` | enable health indicator | `true` |
-
-It is mandatory to provide `influxdb.token` or  `influxdb.username`/`influxdb.password` for authentication. For production use `influxdb.token` because otherwise a sessions is created that will not survive InfluxDB restarts!
-
-## Build & Release
-
-### Dependency updates
-
-Display dependency updates:
-
-```sh
-mvn versions:display-property-updates -U
-```
-
-Update dependencies:
-
-```sh
-mvn versions:update-properties
-```
-
-### Release locally
-
-Run:
-
-```sh
-mvn release:prepare release:perform release:clean -B -DreleaseProfiles=oss-release
-```
