@@ -39,7 +39,7 @@ public class InfluxDBFactory {
 	InfluxDBClientOptions options(
 			@Value("${influxdb.url:`http://influxdb:8086`}") String url,
 			@Value("${influxdb.token:changeMe}") char[] token,
-			@Value("${influxdb.organisaton:default}") String organisaton,
+			@Value("${influxdb.organisation:default}") String organisation,
 			@Value("${influxdb.bucket:default}") String bucket,
 			@Value("${influxdb.log-level:NONE}") LogLevel logLevel,
 			Optional<OkHttpClient.Builder> okHttp) {
@@ -48,7 +48,7 @@ public class InfluxDBFactory {
 		return builder
 				.url(url)
 				.authenticateToken(token)
-				.org(organisaton)
+				.org(organisation)
 				.bucket(bucket)
 				.logLevel(logLevel)
 				.build();

@@ -40,14 +40,14 @@ public abstract class AbstractTest implements TestPropertyProvider {
 	public Map<String, String> getProperties() {
 		if (properties == null) {
 
-			var influxOrganisaton = "test-organisaton";
+			var influxOrganisation = "test-organisation";
 			var influxBucket = "default";
 			var influxToken = "changeMe";
 			var influxContainer = new GenericContainer<>(DockerImageName.parse("influxdb:2.6.1"))
 					.withEnv("DOCKER_INFLUXDB_INIT_MODE", "setup")
 					.withEnv("DOCKER_INFLUXDB_INIT_USERNAME", "username")
 					.withEnv("DOCKER_INFLUXDB_INIT_PASSWORD", "password")
-					.withEnv("DOCKER_INFLUXDB_INIT_ORG", influxOrganisaton)
+					.withEnv("DOCKER_INFLUXDB_INIT_ORG", influxOrganisation)
 					.withEnv("DOCKER_INFLUXDB_INIT_BUCKET", influxBucket)
 					.withEnv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN", influxToken)
 					.withExposedPorts(8086)
@@ -58,7 +58,7 @@ public abstract class AbstractTest implements TestPropertyProvider {
 			properties = Map.of(
 					"influxdb.url", "http://" + influxContainer.getHost() + ":" + influxContainer.getMappedPort(8086),
 					"influxdb.token", influxToken,
-					"influxdb.organisaton", influxOrganisaton,
+					"influxdb.organisation", influxOrganisation,
 					"influxdb.bucket", influxBucket);
 		}
 		return properties;
