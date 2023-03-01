@@ -102,7 +102,7 @@
 
 		<version.com.influxdb.client>6.7.0</version.com.influxdb.client>
 		<version.io.kokuwa.micronaut.logging>3.0.5</version.io.kokuwa.micronaut.logging>
-		<version.io.micronaut>3.8.5</version.io.micronaut>
+		<version.io.micronaut>3.8.6</version.io.micronaut>
 
 	</properties>
 
