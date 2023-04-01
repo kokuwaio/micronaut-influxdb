@@ -1,7 +1,7 @@
 # Micronaut InfluxDB support
 
 [![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/kokuwaio/micronaut-influxdb.svg?label=License)](http://www.apache.org/licenses/)
-[![Maven Central](https://img.shields.io/maven-central/v/io.kokuwa.micronaut/micronaut-influxdb.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.kokuwa.micronaut%22%20AND%20a:%22micronaut-influxdb%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.kokuwa.micronaut/micronaut-influxdb.svg?label=Maven%20Central)](https://central.sonatype.com/namespace/io.kokuwa.micronaut)
 [![CI](https://img.shields.io/github/actions/workflow/status/kokuwaio/micronaut-influxdb/ci.yaml?branch=main&label=CI)](https://github.com/kokuwaio/micronaut-influxdb/actions/workflows/ci.yaml?query=branch%3Amain)
 
 Include in your `pom.xml`:
