@@ -99,7 +99,7 @@
 
 		<!-- dependencies -->
 
-		<version.com.influxdb.client>6.8.0</version.com.influxdb.client>
+		<version.com.influxdb.client>6.9.0</version.com.influxdb.client>
 		<version.io.kokuwa.micronaut.logging>3.0.6</version.io.kokuwa.micronaut.logging>
 		<version.io.micronaut>3.9.2</version.io.micronaut>
 
