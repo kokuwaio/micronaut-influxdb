@@ -6,12 +6,12 @@
 		<groupId>io.kokuwa.maven</groupId>
 		<artifactId>maven-parent</artifactId>
 		<version>0.6.5</version>
-		<relativePath/>
+		<relativePath />
 	</parent>
 
 	<groupId>io.kokuwa.micronaut</groupId>
 	<artifactId>micronaut-influxdb</artifactId>
-	<version>3.0.2-SNAPSHOT</version>
+	<version>3.0.2</version>
 
 	<name>InfluxDB support for Micronaut</name>
 	<description>Adds features like factory for client, health endpoint, e.g.</description>
@@ -45,7 +45,7 @@
 		<url>https://github.com/kokuwaio/micronaut-influxdb</url>
 		<connection>scm:git:https://github.com/kokuwaio/micronaut-influxdb.git</connection>
 		<developerConnection>scm:git:https://github.com/kokuwaio/micronaut-influxdb.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>3.0.2</tag>
 	</scm>
 	<issueManagement>
 		<system>github</system>
