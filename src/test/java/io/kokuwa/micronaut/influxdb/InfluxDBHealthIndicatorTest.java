@@ -43,7 +43,7 @@ public class InfluxDBHealthIndicatorTest extends AbstractTest {
 
 			health = health(context, HttpStatus.OK);
 			assertEquals(HealthStatus.UP, health.getStatus(), "status");
-			var influxDetails = ((Map<String, Map<String, String>>) health.getDetails()).get("influxdb");
+			var influxDetails = getDetails(health);
 			assertNotNull(influxDetails, "details for influx on /health missing");
 			assertEquals(HealthStatus.UP.toString(), influxDetails.get("status"), "status on /health invalid");
 			assertNotNull(influxDetails.get("details"), "details on /health invalid");
@@ -62,13 +62,14 @@ public class InfluxDBHealthIndicatorTest extends AbstractTest {
 
 			health = health(context, HttpStatus.SERVICE_UNAVAILABLE);
 			assertEquals(HealthStatus.DOWN, health.getStatus(), "status");
-			var influxDetails = ((Map<String, Map<String, String>>) health.getDetails()).get("influxdb");
+			var influxDetails = getDetails(health);
 			assertNotNull(influxDetails, "details for influx on /health missing");
 			assertEquals(HealthStatus.DOWN.toString(), influxDetails.get("status"), "status on /health invalid");
 			assertNull(influxDetails.get("details"), "details on /health invalid");
 		});
 	}
 
+	@SuppressWarnings("unchecked")
 	private HealthResult health(ApplicationContext context, HttpStatus status) {
 
 		var server = context.getBean(EmbeddedServer.class).start();
@@ -86,5 +87,10 @@ public class InfluxDBHealthIndicatorTest extends AbstractTest {
 		var body = response.getBody(HealthResult.class);
 		assertTrue(body.isPresent(), "body missing");
 		return body.get();
+	}
+
+	@SuppressWarnings("unchecked")
+	private Map<String, ?> getDetails(HealthResult health) {
+		return ((Map<String, Map<String, ?>>) health.getDetails()).get("influxdb");
 	}
 }
