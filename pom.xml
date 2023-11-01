@@ -70,7 +70,7 @@
 		<!-- ===================================================================== -->
 
 		<version.com.influxdb.client>6.10.0</version.com.influxdb.client>
-		<version.io.micronaut>3.10.1</version.io.micronaut>
+		<version.io.micronaut>3.10.2</version.io.micronaut>
 
 	</properties>
 
